@@ -19,7 +19,14 @@ export class PropertiesService {
     return await this.propertyRepository.save(property);
   }
 
-  async findAll(): Promise<PropertyEntity[]> {
+  // async findAll(): Promise<PropertyEntity[]> {
+  //   return await this.propertyRepository.find();
+  // }
+
+  async findAll(status?: PropertyStatus): Promise<PropertyEntity[]> {
+    if (status) {
+      return await this.propertyRepository.find({ where: { status } });
+    }
     return await this.propertyRepository.find();
   }
 

@@ -6,12 +6,14 @@ import {
   Delete,
   Param,
   Body,
+  Query,
 } from "@nestjs/common";
 import { PropertiesService } from "./properties.service";
 import { CreatePropertyDto } from "./dto/create-property.dto";
 import { UpdatePropertyDto } from "./dto/update-property.dto";
 import { PropertyEntity } from "./entities/property.entity";
 import { ApiTags } from "@nestjs/swagger";
+import { PropertyStatus } from "./entities/property.entity";
 
 @ApiTags("Properties")
 @Controller("properties")
@@ -27,9 +29,15 @@ export class PropertiesController {
   }
 
   // Get all properties
+  // @Get()
+  // async findAll(): Promise<PropertyEntity[]> {
+  //   return this.propertiesService.findAll();
+  // }
   @Get()
-  async findAll(): Promise<PropertyEntity[]> {
-    return this.propertiesService.findAll();
+  async findAll(
+    @Query("status") status?: PropertyStatus,
+  ): Promise<PropertyEntity[]> {
+    return this.propertiesService.findAll(status);
   }
 
   // Get all vacant properties
